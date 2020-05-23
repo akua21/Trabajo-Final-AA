@@ -1,0 +1,164 @@
+\documentclass{uc3mpracticas}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%                   Plantilla Prácticas UC3M                               %%%
+%%%                Universidad Carlos III de Madrid                          %%%
+%%%                   Alejandro Valverde Mahou                               %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Permitir cabeceras y pie de páginas personalizados
+\pagestyle{fancy}
+
+%Path por defecto de las imágenes
+\graphicspath{ {./images/} }
+
+%Declarar formato de encabezado y pie de página de las páginas del documento
+\fancypagestyle{doc}{
+  %Cabecera
+  \headerpr[1]{Nombre}{UC3M}{Asignatura}
+  %Pie de Página
+  \footerpr{}{UC3M}{{\thepage} de \pageref{LastPage}}
+}
+
+%Declarar formato de encabezado y pie del título e indice
+\fancypagestyle{titu}{%
+  %Cabecera
+  \headerpr{}{}{}
+  %Pie de Página
+  \footerpr{}{}{}
+}
+
+
+\appto\frontmatter{\pagestyle{titu}}
+\appto\mainmatter{\pagestyle{doc}}
+
+
+\begin{document}
+  %Comienzo formato título
+  \frontmatter
+
+
+  %Portada 1 (Centrado todo)
+  \centeredtitle{Images/LogoUC3M.png}{Grado en Lorem Ipsum}{Curso XXXX-YYYY}{Nombre Asignatura}{Nombre Práctica}
+
+  \begin{center}
+    \large Día/Mes/Año
+  \end{center}
+
+  \vspace{40mm}
+
+  \authors{Jhon Doe}{100000000}{Jhon Doe }{100000000}{Jhon Doe }{100000000}{Jhon Doe}{100000000}
+
+  \newpage
+
+  %Portada 2 (Dos columnas)
+  \twocolumstitle{Images/LogoUC3M.png}{Grado en Lorem Ipsum}{Curso XXXX-YYYY}{Nombre Asignatura}{Nombre Práctica}
+
+  \begin{center}
+    \large Día/Mes/Año
+  \end{center}
+
+  \newpage
+
+  %Portada 3 (Centrado alternativo)
+  \centeredtitlealter{Images/LogoUC3M.png}{Grado en Lorem Ipsum}{Curso XXXX-YYYY}{Nombre Asignatura}{Nombre Práctica}
+
+  \begin{center}
+    \large Día/Mes/Año
+  \end{center}
+
+  \newpage
+
+  %Índice
+  \tableofcontents
+
+  \newpage
+
+  %Comienzo formato documento general
+  \mainmatter
+
+  \section{Title}
+  \subsection{Subtitle}
+  \subsubsection{Subsubtitle}
+
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi rutrum orci eu erat sollicitudin, at mattis sapien tempus. Proin accumsan dignissim sollicitudin. Aliquam et diam vitae ex blandit posuere finibus vitae massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id tellus vitae nulla consectetur dictum. Nulla non lacus a erat vestibulum viverra quis bibendum eros. Duis semper lectus sed aliquam porttitor. Maecenas consectetur ipsum ornare orci semper, non malesuada orci euismod. Etiam eleifend orci at quam posuere volutpat. Suspendisse finibus mauris at ornare luctus. Pellentesque sagittis elementum ante, quis vulputate sem rutrum vitae. Nam a urna vel urna tempus porttitor sit amet vel nisl. Aenean sapien eros, mollis sed aliquet quis, tristique non nunc. Proin molestie gravida dictum. Vestibulum elementum sodales magna, eget elementum est.
+
+  \section{Title2}
+    \subsection{Subtitle2}
+
+    \imgcenter[150]{Images/BlueLogo.jpg}
+
+    \section{Title3}
+    \subsection{Subtitle3.1}
+
+
+      %Tabla sin bordes
+      \begin{center}
+        \begin{tabular}{ c c c }
+         cell1 & cell2 & cell3 \\
+         cell4 & cell5 & cell6 \\
+         cell7 & cell8 & cell9
+        \end{tabular}
+      \end{center}
+
+    \subsection{Subtitle3.2}
+
+      %Tabla con bordes
+      \begin{center}
+        \begin{tabular}{ | c | c | c | }
+          \hline
+         cell1 & cell2 & cell3 \\
+         \hline
+         cell4 & cell5 & cell6 \\
+         \hline
+         cell7 & cell8 & cell9 \\
+         \hline
+        \end{tabular}
+      \end{center}
+
+    \subsection{Subtitle3.2}
+
+      %Tabla con algunos bordes
+      \begin{center}
+        \begin{tabular}{  c | c | c  }
+
+         cell1 & cell2 & cell3 \\
+         \hline
+         \hline
+         cell4 & cell5 & cell6 \\
+         cell7 & cell8 & cell9 \\
+        \end{tabular}
+      \end{center}
+
+
+  \section{Title4}
+    \subsection{Subtitle4.1}
+
+      \begin{itemize}
+        \item One entry in the list
+        \item Another entry in the list
+      \end{itemize}
+
+    \subsection{Subtitle4.2}
+
+      \begin{enumerate}
+        \item One entry in the list
+        \item Another entry in the list
+      \end{enumerate}
+
+    \subsection{Subtitle4.3}
+
+      \begin{enumerate}
+        \item One entry in the list
+        \begin{enumerate}
+          \item One entry in the list
+          \item Another entry in the list
+        \end{enumerate}
+        \item Another entry in the list
+      \end{enumerate}
+
+
+
+\end{document}
