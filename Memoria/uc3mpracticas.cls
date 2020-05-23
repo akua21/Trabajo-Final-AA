@@ -47,7 +47,7 @@
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
-    filecolor=magenta,      
+    filecolor=magenta,
     urlcolor=cyan,
 }
 
@@ -84,9 +84,12 @@
 %5 -> Título práctica
 \newcommand{\centeredtitle}[5]{
   \begin{center}
-    \vspace{10mm}
+
+    \vspace{40mm}
 
     \includegraphics[width=80mm]{#1}
+
+    \vspace{10mm}
 
     \LARGE #2
 
