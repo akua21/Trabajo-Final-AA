@@ -1,6 +1,8 @@
 \documentclass{uc3mpracticas}
 
 \usepackage{float}
+\usepackage{subfigure}
+\usepackage[export]{adjustbox}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                   Plantilla Prácticas UC3M                               %%%
@@ -80,11 +82,9 @@
 
   La fiabilidad que se espera obtener de esta prueba es bastante elevada puesto que se conoce que los virus de la familia \textit{Coronaviridae} poseen una característica distintiva: suelen tener forma esférica y unas púas alredor de todo su cuerpo, de forma que facilitará la diferenciación de estos virus respecto a otros.
 
-  \vspace{3mm}
-
   \begin{figure}[H]
     \begin{center}
-      \includegraphics[angle=90,width=80mm]{Images/coronaviridae_0009.jpg}
+      \includegraphics[angle=90,width=80mm, frame]{Images/coronaviridae/coronaviridae_0009.jpg}
       \caption{Muestra del virus \textit{COVID-19}}
     \end{center}
   \end{figure}
@@ -93,6 +93,7 @@
 
   \begin{enumerate}
     \item Recopilar un número de imágenes de muestras considerable entre las que se encuentren todo tipo de virus, entre ellos, el \textit{COVID-19}. Estas imágenes deberán estar previamente etiquetadas.
+    \item Realizar un preprocesado a las imágenes.
     \item Entrenar el modelo de aprendizaje automático.
     \item Evaluar el modelo generado.
     \item Utilizar este modelo para clasificar nuevas imágenes.
@@ -100,15 +101,32 @@
 
   \vspace{2mm}
 
-  Dado que el conjunto de datos son imágenes, se va a usar una \textbf{red de neuronas} para realizar la tarea de aprendizaje automático.
-
-
-% Definir el problema como una tarea de aprendizaje automático o un conjunto detareas de aprendizaje automático (en caso de que sean necesarias varias tareas)
-
-
+  Dado que el conjunto de datos son imágenes, se va a usar una \textbf{red de neuronas} para realizar la tarea de aprendizaje automático. Esta red tendrá que ser capaz de diferenciar muestras con \textit{COVID-19}, muestras con otros virus, y muestras vacías.
 
 
   \section{Datos y Obtención de Datos}
+
+  El conjunto de datos que se usan para entrenar y evaluar el modelo son imágenes de muestras víricas clasificadas. Estas imágenes son tomadas por el microoscopio TEM, son en blanco y negro y de un tamaño variado. Estarán clasificadas en tres categorías: \textbf{COVID-19}, \textbf{otros virus} y \textbf{vacía}.
+
+  \vspace{5mm}
+
+  \begin{figure}[!h]
+    \centering
+    \includegraphics[angle=90, width=0.3\linewidth, height=35mm, frame]{Images/coronaviridae/coronaviridae_0001.jpg}
+    \hspace{4mm}
+    \includegraphics[width=0.3\linewidth, height=35mm, frame]{Images/other/other_0020.jpg}
+    \hspace{4mm}
+    \includegraphics[width=0.3\linewidth, height=35mm, frame]{Images/blank/blank_0019.jpg}
+    \caption{Muestras de \textit{COVID-19}, otros virus y vacía respectivamente}
+  \end{figure}
+
+  \vspace{5mm}
+
+  Los datos se obtienen del \textit{NIAID} (\textit{National Institute of Allergy and Infectious Diseases}) y de la \textit{Biblioteca Sanitaria Pública de EEUU}. También, y en base al \textit{Hackathon}, se estableció contacto con el \textit{CSIC} para conseguir mayor número de imágenes, aunque todavía no se han conseguido.
+
+  \vspace{4mm}
+
+  El problema principal de estas imágenes es su poca cantidad (alrededor de 50 imágenes de cada clase), por eso ha sido necesario contactar con el \textit{CSIC}. Ya que es de vital importancia conseguir un conjunto de imágenes lo suficientemente grande como para poder entrenar a la red de la mejor forma posible.
 
   \section{Preproceso de Datos}
 
