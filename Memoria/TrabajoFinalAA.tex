@@ -278,29 +278,61 @@
 
   \section{Modelado}
 
-  Como la tarea definida es una clasificación de imágenes, el algoritmo que se va a usar es una \textbf{red neuronal covolucional}. Esta es una red neuronal formada por la siguiente combinación de capas: convolucional, \textit{pooling} y densa. Estas redes son especialmente útiles en problemas relacionados con imágenes, porque son capaces de obtener características de las mismas, algo necesario en esta clasificación.
+  Como la tarea definida es una clasificación de imágenes, el algoritmo que se va a usar es una \textbf{red neuronal convolucional}. Esta es una red neuronal formada por la siguiente combinación de capas: convolucional, \textit{pooling} y densa. Estas redes son especialmente buenas en problemas relacionados con imágenes, porque son capaces de obtener características de las mismas, útil en esta clasificación.
 
   \vspace{3mm}
 
   La arquitectura básica consiste en varias capas convolucionales y de \textit{pooling} intercaladas, seguidas de una o varias capas densas.
 
   \begin{itemize}
-    \item \textbf{Convolucional}: formada por neuronas convolucionales que se encargan de procesar matrices con una operación sobre los datos de una imagen, en este caso 2D, que pasa por ellas, en lugar de un único valor numérico. Usan un kernel para recorrer las imágenes e ir extrayendo de ellas distintas características, con el objetivo de conseguir información útil.
-    \item \textbf{\textit{Pooling}}: realizan una operación para resumir las características de una región. En concreto \textit{max-pooling}, encuentra el valor máximo dentro de un grupo de píxeles
-    \item \textbf{Densa}: formada por neuronas completamente enlazadas. La salida de cada neurona dentro de una capa densa es:
+    \item \textbf{Convolucional}: capa formada por neuronas convolucionales que se encargan de procesar matrices de entrada con una operación sobre ellas, en lugar de un único valor numérico. Usan un \textit{kernel} para recorrer las matrices e ir extrayendo de ellas distintas características, con el objetivo de conseguir información útil. En este caso, la matriz es los valores de los \textit{pixels} de las imágenes. La salida de cada neurona de una capa convolucional es:
 
     \begin{center}
-      Y = b + f(w1...)
+      $ \displaystyle Y_{j}=f\left(b_{j}+\sum_{i}K_{ij}\otimes Y_{i}\right) $
     \end{center}
+
+
+    Donde $\displaystyle Y_{j}$ es la salida de una neurona $\displaystyle j$ y consiste en una matriz que se calcula a través de la combinación lineal de las salidas de las neuronas en la capa anterior ($\displaystyle Y_{i}$), cada una de ellas operadas con el \textit{kernel} $\displaystyle K_{ij}$ correspondiente a esa conexión. Esta cantidad se suma a una constante $\displaystyle b_{j}$ y luego se pasa por la función de activación de la neurona ($\displaystyle f()$).
+
+    \vspace{2mm}
+
+    La anterior operación se realiza de la siguiente manera:
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=\textwidth]{Images/kernel.png}
+      \caption{Operación convolucional en una matriz 3x3 con un \textit{kernel} de 2x2}
+    \end{figure}
+
+    Donde el \textit{kernel} se inicializa aleatoriamente, y va variando sus valores a lo largo del entrenamiento, buscando la configuración ideal.
+
+    \vspace{2mm}
+
+    Con esto se consigue reducir el tamaño de la matriz de forma que se van consiguiendo las características más relevantes de cada sección en cada capa.
+
+
+    \item \textbf{\textit{Pooling}}: capa encargada de reducir el tamaño de la matriz de entrada drásticamente, realizando una operación para resumir las características de una región. En concreto \textit{max-pooling}, encuentra el valor máximo dentro de un grupo de píxeles.
+
+    \item \textbf{Densa}: capa formada por neuronas completamente enlazadas. La salida de cada neurona dentro de una capa densa depende de su entrada y sus pesos asociados, y sigue la siguiemte fórmula:
+
+    \begin{center}
+      $ \displaystyle Y_{j}=f\left(b_{j}+\sum_{i}\omega_{ij} \cdot Y_{i}\right)$
+    \end{center}
+
+
+    Donde $\displaystyle Y_{j}$ es la salida de una neurona $\displaystyle j$ y consiste en un valor que se calcula a través de la multiplicación de las salidas de las neuronas en la capa anterior ($\displaystyle Y_{i}$), cada una de ellas operadas con el peso asociado a la neurona $\omega_{ij}$. Este valor se suma a una constante $\displaystyle b_{j}$ y luego se pasa por la función de activación de la neurona ($\displaystyle f()$).
+
   \end{itemize}
 
   Además, y para conseguir el correcto funcionamiento de la red, es necesario añadir capas adicionales auxiliares:
 
   \begin{itemize}
     \item \textbf{\textit{Flatten}}: esta capa no aporta información a la red, y su única funcionalidad es la de hacer de puente entre las capas convolucionales y las capas densas, ya que tanto las entradas como las salidas de las capas convolucionales consisten en vectores tridimensionales, mientras que las capas densas trabajan con vectores unidimensionales. Por tanto, esta capa transforma este vector tridimensional '\textit{aplanándolo}', es decir, poniendo todos sus datos de forma consecutiva, para que la capa densa pueda utilizarlos.
-    \item Dropout
 
-    \item BatchNormalization
+    \item \textbf{\textit{Dropout}}: es una forma de regularizar el entrenamiento de la red. Sirve para prevenir el \textit{overfitting} de forma rápida y fácil.
+
+    \item \textbf{\textit{BatchNormalization}}: normaliza los valor de la función de activación en una capa oculta. Así se evitan pesos fuera de rango, permite una tasa de aprendizaje más alta y reduce el \textit{overfitting}.
+
   \end{itemize}
   % Justificar el tipo de algoritmo adecuado para la/s tarea/s definida/s.
   %
