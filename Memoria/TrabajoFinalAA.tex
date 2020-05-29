@@ -1,8 +1,9 @@
 \documentclass{uc3mpracticas}
 
 \usepackage{float}
-\usepackage{subfigure}
 \usepackage[export]{adjustbox}
+\usepackage{caption}
+\usepackage{subcaption}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                   Plantilla Prácticas UC3M                               %%%
@@ -52,6 +53,7 @@
   %Índice
   \tableofcontents
 
+  \listoffigures
   \newpage
 
   %Comienzo formato documento general
@@ -103,6 +105,7 @@
 
   Dado que el conjunto de datos son imágenes, se va a usar una \textbf{red de neuronas} para realizar la tarea de aprendizaje automático. Esta red tendrá que ser capaz de diferenciar muestras con \textit{COVID-19}, muestras con otros virus, y muestras vacías.
 
+  \newpage
 
   \section{Datos y Obtención de Datos}
 
@@ -112,13 +115,24 @@
 
   \begin{figure}[!h]
     \centering
-    \includegraphics[angle=90, width=0.3\linewidth, height=35mm, frame]{Images/coronaviridae/coronaviridae_0001.jpg}
-    \hspace{4mm}
-    \includegraphics[width=0.3\linewidth, height=35mm, frame]{Images/other/other_0020.jpg}
-    \hspace{4mm}
-    \includegraphics[width=0.3\linewidth, height=35mm, frame]{Images/blank/blank_0019.jpg}
-    \caption{Muestras de \textit{COVID-19}, otros virus y vacía respectivamente}
+    \begin{subfigure}[b]{0.3\textwidth}
+      \includegraphics[angle=90, width=\textwidth, height=35mm, frame]{Images/coronaviridae/coronaviridae_0001.jpg}
+      \caption{Muestra de \textit{COVID-19}}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+      \includegraphics[width=\textwidth, height=35mm, frame]{Images/other/other_0021.jpg}
+      \caption{Muestra de otros virus}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+      \includegraphics[width=\textwidth, height=35mm, frame]{Images/blank/blank_0019.jpg}
+      \caption{Muestra vacía}
+    \end{subfigure}
+
+    \caption{Muestras víricas de ejemplo}
   \end{figure}
+
 
   \vspace{5mm}
 
@@ -127,6 +141,8 @@
   \vspace{4mm}
 
   El problema principal de estas imágenes es su poca cantidad (alrededor de 50 imágenes de cada clase), por eso ha sido necesario contactar con el \textit{CSIC}. Ya que es de vital importancia conseguir un conjunto de imágenes lo suficientemente grande como para poder entrenar a la red de la mejor forma posible.
+
+  \newpage
 
   \section{Preproceso de Datos}
 
@@ -138,13 +154,171 @@
 
   \vspace{4mm}
 
-  Después
+  Después, se dividió el conjunto de datos en \textbf{set de entrenamiento} y \textbf{set de evaluación}. Al hacer esta separación se ha decidido dividir en una proporción de 20\% evaluación (24 datos) y 80\% entrenamiento (102 datos).
 
+  \vspace{4mm}
+
+  Dado que el número de datos que se tienen es muy reducido, se va a optar por usar técnicas para aumentar el número de datos. Esto se hace para evitar el \textit{overfitting}, dado que con un número pequeño de datos, es más fácil que se produzca.
+
+  \vspace{2mm}
+
+  El aumento de datos se realizará en todas las imágenes del set de entrenamiento, para aumentar el máximo posible el número de datos. En un principio, no se va a realizar un aumento al set de evaluación.
+
+  \vspace{2mm}
+
+  Las técnicas de aumento de datos que se van a utilzar son: \textit{\textbf{rotación}}, \textit{\textbf{volteo}}, \textit{\textbf{traslación}} y \textit{\textbf{añadir ruido}}.
+
+  \vspace{3mm}
+
+  Otras técnicas que serían también útiles pero que no se van a implementar a menos que sean necesarias son: ampliar o alejar la imagen, rotaciones no solo de 90º y mezclar varias técnicas.
+
+  \vspace{2mm}
+
+  Estas técnicas se pueden aplicar a las imágenes debido a que no son especialmente simétricas, y por tanto, las nuevas imágenes generadas serán diferentes a las originales y permitirán a la red tener un mejor aprendizaje y reducir el \textit{overfitting}.
+
+  \begin{figure}[!h]
+    \centering
+    \begin{subfigure}[b]{0.23\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/og.png}
+      \caption{Imágen original}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.23\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/rot901.png}
+      \caption{1 rotación de 90º}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.23\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/rot902.png}
+      \caption{2 rotaciones de 90º}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.23\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/rot903.png}
+      \caption{3 rotaciones de 90º}
+    \end{subfigure}
+
+    \caption{Imágenes generadas por \textbf{rotación}}
+  \end{figure}
+
+
+  \begin{figure}[!h]
+    \centering
+    \begin{subfigure}[b]{0.23\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/og.png}
+      \caption{Imágen original}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.23\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/voltArrAbj.png}
+      \caption{Volteo arriba-abajo}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.23\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/voltIzqDrch.png}
+      \caption{Volteo izq-drch}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.23\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/voltIDAA.png}
+      \caption{Volteo combinado}
+    \end{subfigure}
+
+    \caption{Imágenes generadas por \textbf{volteo}}
+  \end{figure}
+
+  \begin{figure}[!h]
+    \centering
+    \begin{subfigure}[b]{0.18\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/og.png}
+      \caption{Imágen original}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.18\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/trasAbj.png}
+      \caption{Traslación abajo}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.18\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/trasArr.png}
+      \caption{Traslación arriba}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.18\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/trasIzq.png}
+      \caption{Traslación izq}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.18\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/trasDrch.png}
+      \caption{Traslación derecha}
+    \end{subfigure}
+
+    \caption{Imágenes generadas por \textbf{traslación}}
+  \end{figure}
+
+  \begin{figure}[!h]
+
+    \hspace{0.16\textwidth}
+    \begin{subfigure}[H]{0.25\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/og.png}
+      \caption{Imágen original}
+    \end{subfigure}
+    \hspace{0.16\textwidth}
+    \begin{subfigure}[H]{0.25\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/noise.png}
+      \caption{Imágen con ruido}
+    \end{subfigure}
+
+    \caption{Imágenes generadas con \textbf{ruido}}
+  \end{figure}
+
+
+    \newpage
 
   \section{Modelado}
 
+  Como la tarea definida es una clasificación de imágenes, el algoritmo que se va a usar es una \textbf{red neuronal covolucional}. Esta es una red neuronal formada por la siguiente combinación de capas: convolucional, \textit{pooling} y densa. Estas redes son especialmente útiles en problemas relacionados con imágenes, porque son capaces de obtener características de las mismas, algo necesario en esta clasificación.
+
+  \vspace{3mm}
+
+  La arquitectura básica consiste en varias capas convolucionales y de \textit{pooling} intercaladas, seguidas de una o varias capas densas.
+
+  \begin{itemize}
+    \item \textbf{Convolucional}: formada por neuronas convolucionales que se encargan de procesar matrices con una operación sobre los datos de una imagen, en este caso 2D, que pasa por ellas, en lugar de un único valor numérico. Usan un kernel para recorrer las imágenes e ir extrayendo de ellas distintas características, con el objetivo de conseguir información útil.
+    \item \textbf{\textit{Pooling}}: realizan una operación para resumir las características de una región. En concreto \textit{max-pooling}, encuentra el valor máximo dentro de un grupo de píxeles
+    \item \textbf{Densa}: formada por neuronas completamente enlazadas. La salida de cada neurona dentro de una capa densa es:
+
+    \begin{center}
+      Y = b + f(w1...)
+    \end{center}
+  \end{itemize}
+
+  Además, y para conseguir el correcto funcionamiento de la red, es necesario añadir capas adicionales auxiliares:
+
+  \begin{itemize}
+    \item \textbf{\textit{Flatten}}: esta capa no aporta información a la red, y su única funcionalidad es la de hacer de puente entre las capas convolucionales y las capas densas, ya que tanto las entradas como las salidas de las capas convolucionales consisten en vectores tridimensionales, mientras que las capas densas trabajan con vectores unidimensionales. Por tanto, esta capa transforma este vector tridimensional '\textit{aplanándolo}', es decir, poniendo todos sus datos de forma consecutiva, para que la capa densa pueda utilizarlos.
+    \item Dropout
+
+    \item BatchNormalization
+  \end{itemize}
+  % Justificar el tipo de algoritmo adecuado para la/s tarea/s definida/s.
+  %
+  % Breve descripcion de la tecnica o tecnicas de aprendizaje automatico que se utilizarıan para resolverel problema.
+  %
+  % Describir como se plantearıa la seleccion de parametros
+  % ¿Que parametros podrıan ser mas relevantes?
+  % ¿Que factores se consideran para la seleccion de parametros?
+  %
+  % Describir si es necesaria alguna preparacion adicional de los datos especıfica para la/s tecnica/selegida/s.
+
+
+
+  \newpage
+
   \section{Evaluación}
 
+  \newpage
   \section{Uso}
 
 
