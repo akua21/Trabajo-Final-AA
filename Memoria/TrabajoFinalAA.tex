@@ -5,6 +5,10 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
+\usepackage{url}
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                   Plantilla Prácticas UC3M                               %%%
 %%%                Universidad Carlos III de Madrid                          %%%
@@ -446,12 +450,92 @@
 
   Algunos ejemplos de evaluación que se han obtenido son:
 
+  \begin{figure}[!h]
+    \centering
+    \begin{subfigure}[b]{0.43\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/ev3.png}
+      \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.43\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/ev1.png}
+      \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.43\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/ev2.png}
+      \caption{}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.43\textwidth}
+      \includegraphics[width=\textwidth, frame]{Images/ev4.png}
+      \caption{}
+    \end{subfigure}
+
+    \caption{Imágenes de evaluación del modelo}
+  \end{figure}
 
   \newpage
+
   \section{Uso}
 
+  El modelo actual no cumple con los requisitos necesarios para considerarlo terminado. Una vez se consigan más imágenes y se vuelva a entrenar a la red, si se obtienen resultados satisfactorios, el objetivo principal sería construir un servicio web que permita a los usuarios introducir imágenes de muestras víricas, tomadas por un microoscopio TEM, de pacientes de los que se quiere saber si están infectados con el \textit{COVID-19}. El sistema tendría que devolver la probabilidad de que la muestra pertenezca a cada una de las clases del problema, y una alerta o aviso en caso de que la red no consiga determinar con claridad la clase de la muestra.
 
+  \vspace{2mm}
 
+  Se piensa que la mejor forma de llegar al mayor número de usuarios es a través de un servicio web, ya que no requiere de ningún elemento adicional.
+
+  \vspace{2mm}
+
+  Además, podría cosiderarse útil permitir a usuarios mandar un \textit{feedback} añadiendo nuevas imágenes de muestras, de forma que la red pueda reentrenarse con esta nueva información, y ser así cada vez más precisa.
+
+  \section{Anexo}
+
+  Para más información sobre el proyecto:
+
+  \vspace{5mm}
+
+  Diapositivas explicativas:
+
+  \url{https://drive.google.com/file/d/1AFAgb13CCIGQ49fmR0S3Yfys5A3NiyM2/view?usp=sharing}
+
+  \vspace{1mm}
+
+  Página creada en el \textit{Hackathon} del proyecto:
+
+   \url{https://taiga.vencealvirus.software.imdea.org/project/danoloan-esquema-de-proyecto-renombrame/wiki/home}
+
+  \vspace{15mm}
+
+  \textbf{PDF con el desarrollo y entrenamiento del modelo creado: }
+
+  \url{https://github.com/akua21/Trabajo-Final-AA/blob/master/Memoria/Clasificador%20COVID-19/Clasificador%20COVID-19.pdf}
+
+  \textbf{PDF con la evaluación del modelo: }
+
+  \url{https://github.com/akua21/Trabajo-Final-AA/blob/master/Memoria/Evaluacion/Evaluacion.pdf}
+
+  \vspace{10mm}
+
+  \section{Referencias}
+
+  \begin{itemize}
+    \item TensorFlow CNN information:
+
+    \url{https://www.tensorflow.org/tutorials/images/cnn}, \url{https://www.tensorflow.org/tutorials/images/classification}
+
+    \item CV-Tricks, Ankit Sachan:
+
+    \url{https://cv-tricks.com/tensorflow-tutorial/training-convolutional-neural-network-for-image-classification/}
+
+    \item Medium, Connor Shorten:
+
+    \url{https://towardsdatascience.com/image-classification-python-keras-tutorial-kaggle-challenge-45a6332a58b8}
+
+    \item Google:
+
+    \url{https://developers.google.com/machine-learning/glossary}
+  \end{itemize}
 
 
 
