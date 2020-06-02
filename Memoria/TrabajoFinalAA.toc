@@ -1,7 +1,7 @@
 \babel@toc {spanish}{}
 \contentsline {section}{\numberline {1}Definición del Problema}{3}{section.1}%
-\contentsline {section}{\numberline {2}Datos y Obtención de Datos}{5}{section.2}%
-\contentsline {section}{\numberline {3}Preproceso de Datos}{6}{section.3}%
-\contentsline {section}{\numberline {4}Modelado}{7}{section.4}%
+\contentsline {section}{\numberline {2}Datos y Obtención de Datos}{4}{section.2}%
+\contentsline {section}{\numberline {3}Preproceso de Datos}{4}{section.3}%
+\contentsline {section}{\numberline {4}Modelado}{6}{section.4}%
 \contentsline {section}{\numberline {5}Evaluación}{10}{section.5}%
 \contentsline {section}{\numberline {6}Uso}{11}{section.6}%

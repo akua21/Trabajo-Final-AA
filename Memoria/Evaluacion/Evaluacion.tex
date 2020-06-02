@@ -411,335 +411,335 @@
 
 
 
-    \hypertarget{evaluaciuxf3n-buxe1sica-del-modelo-de-clasificaciuxf3n-de-covid-19}{%
-\section{\texorpdfstring{Evaluación básica del modelo de Clasificación
-de
-\emph{COVID-19}}{Evaluación básica del modelo de Clasificación de COVID-19}}\label{evaluaciuxf3n-buxe1sica-del-modelo-de-clasificaciuxf3n-de-covid-19}}
-
-Esta es una pequeña demo de la evaluación del modelo generado en la
-tarea
-\href{https://github.com/akua21/Trabajo-Final-AA/blob/master/Memoria/Clasificador\%20COVID-19/Clasificador\%20COVID-19.pdf}{Clasificador
-COVID-19.pdf}.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{1}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
-\PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
-\PY{k+kn}{import} \PY{n+nn}{os} \PY{c+c1}{\PYZsh{} Funciones del sistema operativo}
-\PY{k+kn}{from} \PY{n+nn}{PIL} \PY{k+kn}{import} \PY{n}{Image} \PY{c+c1}{\PYZsh{} Para obtener el valor de los pixeles de las imágenes}
-\PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
-\PY{k+kn}{import} \PY{n+nn}{random} \PY{k}{as} \PY{n+nn}{rng}
-\PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{keras} \PY{k+kn}{import} \PY{n}{models}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \hypertarget{cargar-el-modelo-ya-existente}{%
-\subsection{Cargar el Modelo ya
-existente}\label{cargar-el-modelo-ya-existente}}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{2}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{model} \PY{o}{=} \PY{n}{models}\PY{o}{.}\PY{n}{load\PYZus{}model}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./modelo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    Se hace la misma división que en el modelo para comprobar si clasifica
-correctamente imágenes con las que ha entrenado e imágenes con las que
-no ha entrenado.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{3}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{IMG\PYZus{}SIZE} \PY{o}{=} \PY{l+m+mi}{500}
-\PY{n}{className} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blank}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{other}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coronaviridae}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{4}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{trainingSet} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-\PY{n}{evaluationSet} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-
-\PY{k}{for} \PY{n}{folder} \PY{o+ow}{in} \PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./images}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
-    \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{img} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./images/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{folder}\PY{p}{)}\PY{p}{)}\PY{p}{:}
-        \PY{n}{imgClass} \PY{o}{=} \PY{n}{folder}
-        \PY{n}{path} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./images/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{folder}\PY{p}{,} \PY{n}{img}\PY{p}{)}
-        \PY{n}{imgData} \PY{o}{=} \PY{n}{Image}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{path}\PY{p}{)}
-        \PY{n}{imgData} \PY{o}{=} \PY{n}{imgData}\PY{o}{.}\PY{n}{convert}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{L}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-
-        \PY{n}{imgData} \PY{o}{=} \PY{n}{imgData}\PY{o}{.}\PY{n}{resize}\PY{p}{(}\PY{p}{(}\PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{n}{IMG\PYZus{}SIZE}\PY{p}{)}\PY{p}{,} \PY{n}{Image}\PY{o}{.}\PY{n}{ANTIALIAS}\PY{p}{)}
-        \PY{n}{imgData} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{imgData}\PY{p}{)}
-
-        \PY{k}{if} \PY{n}{i} \PY{o}{\PYZpc{}} \PY{l+m+mi}{10} \PY{o}{\PYZlt{}} \PY{l+m+mi}{8}\PY{p}{:}
-            \PY{n}{trainingSet}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{imgData}\PY{p}{,} \PY{n}{imgClass}\PY{p}{)}\PY{p}{)}
-        \PY{k}{else}\PY{p}{:}
-            \PY{n}{evaluationSet}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{imgData}\PY{p}{,} \PY{n}{imgClass}\PY{p}{)}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{5}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{probability\PYZus{}model} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{keras}\PY{o}{.}\PY{n}{Sequential}\PY{p}{(}\PY{p}{[}\PY{n}{model}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{keras}\PY{o}{.}\PY{n}{layers}\PY{o}{.}\PY{n}{Softmax}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{6}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{trainingData} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-\PY{n}{trainingLabel} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-
-\PY{n}{testData} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-\PY{n}{testLabel} \PY{o}{=} \PY{p}{[}\PY{p}{]}
-
-\PY{k}{for} \PY{n}{element} \PY{o+ow}{in} \PY{n}{trainingSet}\PY{p}{:}
-    \PY{n}{trainingData}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{element}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-    \PY{n}{trainingLabel}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{className}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{element}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
-
-\PY{k}{for} \PY{n}{element} \PY{o+ow}{in} \PY{n}{evaluationSet}\PY{p}{:}
-    \PY{n}{testData}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{element}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-    \PY{n}{testLabel}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{className}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{element}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{trainingData} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{trainingData}\PY{p}{)}
-\PY{n}{trainingLabel} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{trainingLabel}\PY{p}{)}
-
-\PY{n}{testData} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{testData}\PY{p}{)}
-\PY{n}{testLabel} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{testLabel}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \hypertarget{evaluar-con-imuxe1genes-de-entrenamiento}{%
-\subsection{Evaluar con imágenes de
-entrenamiento}\label{evaluar-con-imuxe1genes-de-entrenamiento}}
-
-Esta evaluación no es muy decisiva, ya que puede dar un resultado muy
-elevado de aciertos, pero estar cometiendo \emph{overfitting}. De todas
-formas, es útil para comprobar si el modelo ha aprendido o no.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{7}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{loss}\PY{p}{,} \PY{n}{acc} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{trainingData}\PY{p}{,}  \PY{n}{trainingLabel}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{8}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Precisión del modelo sobre sus datos de entrenamiento: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+}  \PY{n+nb}{str}\PY{p}{(}\PY{n}{acc}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)} \PY{o}{+}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Precisión del modelo sobre sus datos de entrenamiento: 94.11764740943909\%
-    \end{Verbatim}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{9}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Confianza de blank: 0.9992532
-Confianza de other: 2.959637e-07
-Confianza de coronaviridae: 0.0007465224
-
-Clase con mayor confianza:  blank
-    \end{Verbatim}
-
-    \begin{center}
-    \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_12_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{10}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Confianza de blank: 8.231633e-07
-Confianza de other: 0.9561284
-Confianza de coronaviridae: 0.043870714
-
-Clase con mayor confianza:  other
-    \end{Verbatim}
-
-    \begin{center}
-    \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_13_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{11}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Confianza de blank: 2.6200481e-05
-Confianza de other: 0.03125488
-Confianza de coronaviridae: 0.96871895
-
-Clase con mayor confianza:  coronaviridae
-    \end{Verbatim}
-
-    \begin{center}
-    \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_14_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-
-    \hypertarget{evaluar-con-imuxe1genes-ajenas-al-entrenamiento}{%
-\subsection{Evaluar con imágenes ajenas al
-entrenamiento}\label{evaluar-con-imuxe1genes-ajenas-al-entrenamiento}}
-
-En este caso se puede considerar como una prueba de evaluación real, ya
-que se utilizan imágenes desconocidas para el modelo.
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{12}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{loss}\PY{p}{,} \PY{n}{acc} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{testData}\PY{p}{,}  \PY{n}{testLabel}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{13}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Precisión del modelo sobre datos desconocidos: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+}  \PY{n+nb}{str}\PY{p}{(}\PY{n}{acc}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)} \PY{o}{+}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Precisión del modelo sobre datos desconocidos: 83.33333134651184\%
-    \end{Verbatim}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{14}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Confianza de blank: 0.0019071633
-Confianza de other: 0.01573235
-Confianza de coronaviridae: 0.9823605
-
-Clase con mayor confianza:  coronaviridae
-    \end{Verbatim}
-
-    \begin{center}
-    \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_18_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{15}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Confianza de blank: 2.3575246e-06
-Confianza de other: 0.004301968
-Confianza de coronaviridae: 0.9956956
-
-Clase con mayor confianza:  coronaviridae
-    \end{Verbatim}
-
-    \begin{center}
-    \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_19_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-
-    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
-\prompt{In}{incolor}{16}{\boxspacing}
-\begin{Verbatim}[commandchars=\\\{\}]
-\PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{)}\PY{p}{)}
-
-\PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
-\PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
-\PY{n}{rng}
-\PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
-\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
-\end{Verbatim}
-\end{tcolorbox}
-
-    \begin{Verbatim}[commandchars=\\\{\}]
-Confianza de blank: 0.16239055
-Confianza de other: 0.43715563
-Confianza de coronaviridae: 0.4004538
-
-Clase con mayor confianza:  other
-    \end{Verbatim}
-
-    \begin{center}
-    \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_20_1.png}
-    \end{center}
-    { \hspace*{\fill} \\}
-
-
-    % Add a bibliography block to the postdoc
-
-
-
-\end{document}
+      \hypertarget{evaluaciuxf3n-buxe1sica-del-modelo-de-clasificaciuxf3n-de-covid-19}{%
+  \section{\texorpdfstring{Evaluación básica del modelo de Clasificación
+  de
+  \emph{COVID-19}}{Evaluación básica del modelo de Clasificación de COVID-19}}\label{evaluaciuxf3n-buxe1sica-del-modelo-de-clasificaciuxf3n-de-covid-19}}
+
+  Esta es una pequeña demo de la evaluación del modelo generado en la
+  tarea
+  \href{https://github.com/akua21/Trabajo-Final-AA/blob/master/Memoria/Clasificador\%20COVID-19/Clasificador\%20COVID-19.pdf}{Clasificador
+  COVID-19.pdf}.
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{1}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k}{as} \PY{n+nn}{tf}
+  \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+  \PY{k+kn}{import} \PY{n+nn}{os} \PY{c+c1}{\PYZsh{} Funciones del sistema operativo}
+  \PY{k+kn}{from} \PY{n+nn}{PIL} \PY{k+kn}{import} \PY{n}{Image} \PY{c+c1}{\PYZsh{} Para obtener el valor de los pixeles de las imágenes}
+  \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+  \PY{k+kn}{import} \PY{n+nn}{random} \PY{k}{as} \PY{n+nn}{rng}
+  \PY{k+kn}{from} \PY{n+nn}{tensorflow}\PY{n+nn}{.}\PY{n+nn}{keras} \PY{k+kn}{import} \PY{n}{models}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \hypertarget{cargar-el-modelo-ya-existente}{%
+  \subsection{Cargar el Modelo ya
+  existente}\label{cargar-el-modelo-ya-existente}}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{2}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{model} \PY{o}{=} \PY{n}{models}\PY{o}{.}\PY{n}{load\PYZus{}model}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./modelo}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      Se hace la misma división que en el modelo para comprobar si clasifica
+  correctamente imágenes con las que ha entrenado e imágenes con las que
+  no ha entrenado.
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{3}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{IMG\PYZus{}SIZE} \PY{o}{=} \PY{l+m+mi}{500}
+  \PY{n}{className} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{blank}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{other}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{coronaviridae}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{4}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{trainingSet} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+  \PY{n}{evaluationSet} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+  \PY{k}{for} \PY{n}{folder} \PY{o+ow}{in} \PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./images}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{:}
+      \PY{k}{for} \PY{n}{i}\PY{p}{,} \PY{n}{img} \PY{o+ow}{in} \PY{n+nb}{enumerate}\PY{p}{(}\PY{n}{os}\PY{o}{.}\PY{n}{listdir}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./images/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{folder}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+          \PY{n}{imgClass} \PY{o}{=} \PY{n}{folder}
+          \PY{n}{path} \PY{o}{=} \PY{n}{os}\PY{o}{.}\PY{n}{path}\PY{o}{.}\PY{n}{join}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{./images/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{folder}\PY{p}{,} \PY{n}{img}\PY{p}{)}
+          \PY{n}{imgData} \PY{o}{=} \PY{n}{Image}\PY{o}{.}\PY{n}{open}\PY{p}{(}\PY{n}{path}\PY{p}{)}
+          \PY{n}{imgData} \PY{o}{=} \PY{n}{imgData}\PY{o}{.}\PY{n}{convert}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{L}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+
+          \PY{n}{imgData} \PY{o}{=} \PY{n}{imgData}\PY{o}{.}\PY{n}{resize}\PY{p}{(}\PY{p}{(}\PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{n}{IMG\PYZus{}SIZE}\PY{p}{)}\PY{p}{,} \PY{n}{Image}\PY{o}{.}\PY{n}{ANTIALIAS}\PY{p}{)}
+          \PY{n}{imgData} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{imgData}\PY{p}{)}
+
+          \PY{k}{if} \PY{n}{i} \PY{o}{\PYZpc{}} \PY{l+m+mi}{10} \PY{o}{\PYZlt{}} \PY{l+m+mi}{8}\PY{p}{:}
+              \PY{n}{trainingSet}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{imgData}\PY{p}{,} \PY{n}{imgClass}\PY{p}{)}\PY{p}{)}
+          \PY{k}{else}\PY{p}{:}
+              \PY{n}{evaluationSet}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{imgData}\PY{p}{,} \PY{n}{imgClass}\PY{p}{)}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{5}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{probability\PYZus{}model} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{keras}\PY{o}{.}\PY{n}{Sequential}\PY{p}{(}\PY{p}{[}\PY{n}{model}\PY{p}{,} \PY{n}{tf}\PY{o}{.}\PY{n}{keras}\PY{o}{.}\PY{n}{layers}\PY{o}{.}\PY{n}{Softmax}\PY{p}{(}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{6}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{trainingData} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+  \PY{n}{trainingLabel} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+  \PY{n}{testData} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+  \PY{n}{testLabel} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+  \PY{k}{for} \PY{n}{element} \PY{o+ow}{in} \PY{n}{trainingSet}\PY{p}{:}
+      \PY{n}{trainingData}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{element}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+      \PY{n}{trainingLabel}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{className}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{element}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+
+  \PY{k}{for} \PY{n}{element} \PY{o+ow}{in} \PY{n}{evaluationSet}\PY{p}{:}
+      \PY{n}{testData}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{element}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{n}{IMG\PYZus{}SIZE}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+      \PY{n}{testLabel}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{className}\PY{o}{.}\PY{n}{index}\PY{p}{(}\PY{n}{element}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{trainingData} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{trainingData}\PY{p}{)}
+  \PY{n}{trainingLabel} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{trainingLabel}\PY{p}{)}
+
+  \PY{n}{testData} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{testData}\PY{p}{)}
+  \PY{n}{testLabel} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{testLabel}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \hypertarget{evaluar-con-imuxe1genes-de-entrenamiento}{%
+  \subsection{Evaluar con imágenes de
+  entrenamiento}\label{evaluar-con-imuxe1genes-de-entrenamiento}}
+
+  Esta evaluación no es muy decisiva, ya que puede dar un resultado muy
+  elevado de aciertos, pero estar cometiendo \emph{overfitting}. De todas
+  formas, es útil para comprobar si el modelo ha aprendido o no.
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{7}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{loss}\PY{p}{,} \PY{n}{acc} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{trainingData}\PY{p}{,}  \PY{n}{trainingLabel}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{8}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Precisión del modelo sobre sus datos de entrenamiento: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+}  \PY{n+nb}{str}\PY{p}{(}\PY{n}{acc}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)} \PY{o}{+}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{Verbatim}[commandchars=\\\{\}]
+  Precisión del modelo sobre sus datos de entrenamiento: 94.11764740943909\%
+      \end{Verbatim}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{9}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+  \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{Verbatim}[commandchars=\\\{\}]
+  Confianza de blank: 0.99966526
+  Confianza de other: 1.2846392e-07
+  Confianza de coronaviridae: 0.00033458366
+
+  Clase con mayor confianza:  blank
+      \end{Verbatim}
+
+      \begin{center}
+      \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_12_1.png}
+      \end{center}
+      { \hspace*{\fill} \\}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{10}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+  \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{Verbatim}[commandchars=\\\{\}]
+  Confianza de blank: 0.99999917
+  Confianza de other: 1.1879426e-08
+  Confianza de coronaviridae: 8.862542e-07
+
+  Clase con mayor confianza:  blank
+      \end{Verbatim}
+
+      \begin{center}
+      \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_13_1.png}
+      \end{center}
+      { \hspace*{\fill} \\}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{11}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+  \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{trainingSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{Verbatim}[commandchars=\\\{\}]
+  Confianza de blank: 0.00020594573
+  Confianza de other: 0.99233633
+  Confianza de coronaviridae: 0.007457688
+
+  Clase con mayor confianza:  other
+      \end{Verbatim}
+
+      \begin{center}
+      \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_14_1.png}
+      \end{center}
+      { \hspace*{\fill} \\}
+
+      \hypertarget{evaluar-con-imuxe1genes-ajenas-al-entrenamiento}{%
+  \subsection{Evaluar con imágenes ajenas al
+  entrenamiento}\label{evaluar-con-imuxe1genes-ajenas-al-entrenamiento}}
+
+  En este caso se puede considerar como una prueba de evaluación real, ya
+  que se utilizan imágenes desconocidas para el modelo.
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{12}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{loss}\PY{p}{,} \PY{n}{acc} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{evaluate}\PY{p}{(}\PY{n}{testData}\PY{p}{,}  \PY{n}{testLabel}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{13}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Precisión del modelo sobre datos desconocidos: }\PY{l+s+s2}{\PYZdq{}} \PY{o}{+}  \PY{n+nb}{str}\PY{p}{(}\PY{n}{acc}\PY{o}{*}\PY{l+m+mi}{100}\PY{p}{)} \PY{o}{+}  \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZpc{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{Verbatim}[commandchars=\\\{\}]
+  Precisión del modelo sobre datos desconocidos: 83.33333134651184\%
+      \end{Verbatim}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{14}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+  \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{Verbatim}[commandchars=\\\{\}]
+  Confianza de blank: 0.9982999
+  Confianza de other: 8.35205e-07
+  Confianza de coronaviridae: 0.0016992697
+
+  Clase con mayor confianza:  blank
+      \end{Verbatim}
+
+      \begin{center}
+      \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_18_1.png}
+      \end{center}
+      { \hspace*{\fill} \\}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{15}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+  \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{Verbatim}[commandchars=\\\{\}]
+  Confianza de blank: 1.9783441e-13
+  Confianza de other: 0.9997718
+  Confianza de coronaviridae: 0.00022828217
+
+  Clase con mayor confianza:  other
+      \end{Verbatim}
+
+      \begin{center}
+      \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_19_1.png}
+      \end{center}
+      { \hspace*{\fill} \\}
+
+      \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+  \prompt{In}{incolor}{16}{\boxspacing}
+  \begin{Verbatim}[commandchars=\\\{\}]
+  \PY{n}{rng} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{randint}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{)}\PY{p}{)}
+
+  \PY{n}{plt}\PY{o}{.}\PY{n}{imshow}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{n}{cmap} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{gist\PYZus{}gray}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+  \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{o}{.}\PY{n}{upper}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+  \PY{n}{rng}
+  \PY{n}{prediction} \PY{o}{=} \PY{n}{probability\PYZus{}model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{reshape}\PY{p}{(}\PY{n}{evaluationSet}\PY{p}{[}\PY{n}{rng}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{,} \PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{500}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Confianza de }\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{className}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{:}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{[}\PY{l+m+mi}{2}\PY{p}{]}\PY{p}{)}
+  \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+se}{\PYZbs{}n}\PY{l+s+s1}{Clase con mayor confianza: }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{className}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{prediction}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}\PY{p}{]}\PY{p}{)}
+  \end{Verbatim}
+  \end{tcolorbox}
+
+      \begin{Verbatim}[commandchars=\\\{\}]
+  Confianza de blank: 0.013887938
+  Confianza de other: 0.062597446
+  Confianza de coronaviridae: 0.9235146
+
+  Clase con mayor confianza:  coronaviridae
+      \end{Verbatim}
+
+      \begin{center}
+      \adjustimage{max size={0.35\linewidth}{0.35\paperheight}}{output_20_1.png}
+      \end{center}
+      { \hspace*{\fill} \\}
+
+
+      % Add a bibliography block to the postdoc
+
+
+
+  \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.4.28)  1 JUN 2020 22:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.4.28)  2 JUN 2020 23:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -600,275 +600,291 @@ LaTeX Info: Redefining \% on input line 1.
 \openout5 = `TrabajoFinalAA.lof'.
 
  [2]
-<Images/coronaviridae/coronaviridae_0009.jpg, id=65, 1835.50258pt x 2642.12903p
+<Images/coronaviridae/coronaviridae_0009.jpg, id=69, 1835.50258pt x 2642.12903p
 t>
 File: Images/coronaviridae/coronaviridae_0009.jpg Graphic file (type jpg)
 <use Images/coronaviridae/coronaviridae_0009.jpg>
 Package pdftex.def Info: Images/coronaviridae/coronaviridae_0009.jpg  used on i
-nput line 89.
+nput line 92.
 (pdftex.def)             Requested size: 1835.49811pt x 2642.12262pt.
  [3 <./Images/coronaviridae/coronaviridae_0009.jpg>]
-[4]
-<Images/coronaviridae/coronaviridae_0001.jpg, id=82, 445.1832pt x 600.8046pt>
+<Images/coronaviridae/coronaviridae_0001.jpg, id=81, 445.1832pt x 600.8046pt>
 File: Images/coronaviridae/coronaviridae_0001.jpg Graphic file (type jpg)
 <use Images/coronaviridae/coronaviridae_0001.jpg>
 Package pdftex.def Info: Images/coronaviridae/coronaviridae_0001.jpg  used on i
-nput line 119.
+nput line 121.
 (pdftex.def)             Requested size: 445.18211pt x 600.80312pt.
 
-Overfull \hbox (0.79997pt too wide) in paragraph at lines 119--120
+Overfull \hbox (0.79997pt too wide) in paragraph at lines 121--122
 [][] 
  []
 
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 120.
+(Font)              scaled to size 8.54997pt on input line 122.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <9> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 120.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 122.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 8.54997pt on input line 120.
-<Images/other/other_0021.jpg, id=83, 319.1925pt x 249.21104pt>
+(Font)              scaled to size 8.54997pt on input line 122.
+<Images/other/other_0021.jpg, id=82, 319.1925pt x 249.21104pt>
 File: Images/other/other_0021.jpg Graphic file (type jpg)
 <use Images/other/other_0021.jpg>
-Package pdftex.def Info: Images/other/other_0021.jpg  used on input line 124.
+Package pdftex.def Info: Images/other/other_0021.jpg  used on input line 126.
 (pdftex.def)             Requested size: 141.60918pt x 99.58377pt.
 
-Overfull \hbox (0.79836pt too wide) in paragraph at lines 124--125
+Overfull \hbox (0.79836pt too wide) in paragraph at lines 126--127
 [][] 
  []
 
-<Images/blank/blank_0019.jpg, id=84, 129.50784pt x 79.06339pt>
+<Images/blank/blank_0019.jpg, id=83, 129.50784pt x 79.06339pt>
 File: Images/blank/blank_0019.jpg Graphic file (type jpg)
 <use Images/blank/blank_0019.jpg>
-Package pdftex.def Info: Images/blank/blank_0019.jpg  used on input line 129.
+Package pdftex.def Info: Images/blank/blank_0019.jpg  used on input line 131.
 (pdftex.def)             Requested size: 141.61722pt x 99.58537pt.
 
-Overfull \hbox (0.8064pt too wide) in paragraph at lines 129--130
+Overfull \hbox (0.8064pt too wide) in paragraph at lines 131--132
 [][] 
  []
 
-[5 <./Images/coronaviridae/coronaviridae_0001.jpg> <./Images/other/other_0021.j
-pg> <./Images/blank/blank_0019.jpg>]
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 169.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 179.
 LaTeX Font Info:    Font shape `T1/phv/b/sl' will be
-(Font)              scaled to size 9.49997pt on input line 169.
+(Font)              scaled to size 9.49997pt on input line 179.
+[4 <./Images/coronaviridae/coronaviridae_0001.jpg> <./Images/other/other_0021.j
+pg> <./Images/blank/blank_0019.jpg>]
 LaTeX Font Info:    Trying to load font information for TS1+phv on input line 1
-73.
+87.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1phv.fd
 File: ts1phv.fd 2001/06/04 scalable font definitions for TS1/phv.
 )
 LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 173.
-<Images/og.png, id=90, 218.8175pt x 216.81pt>
+(Font)              scaled to size 9.49997pt on input line 187.
+<Images/og.png, id=89, 218.8175pt x 216.81pt>
 File: Images/og.png Graphic file (type png)
 <use Images/og.png>
-Package pdftex.def Info: Images/og.png  used on input line 182.
+Package pdftex.def Info: Images/og.png  used on input line 196.
 (pdftex.def)             Requested size: 108.56516pt x 107.57104pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 182--183
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 196--197
 [][] 
  []
 
-<Images/rot901.png, id=92, 217.81375pt x 217.81375pt>
+<Images/rot901.png, id=91, 217.81375pt x 217.81375pt>
 File: Images/rot901.png Graphic file (type png)
 <use Images/rot901.png>
-Package pdftex.def Info: Images/rot901.png  used on input line 187.
+Package pdftex.def Info: Images/rot901.png  used on input line 201.
 (pdftex.def)             Requested size: 108.56516pt x 108.56427pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 187--188
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 201--202
 [][] 
  []
 
 LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 188.
-<Images/rot902.png, id=93, 217.81375pt x 217.81375pt>
+(Font)              scaled to size 8.54997pt on input line 202.
+<Images/rot902.png, id=92, 217.81375pt x 217.81375pt>
 File: Images/rot902.png Graphic file (type png)
 <use Images/rot902.png>
-Package pdftex.def Info: Images/rot902.png  used on input line 192.
+Package pdftex.def Info: Images/rot902.png  used on input line 206.
 (pdftex.def)             Requested size: 108.56516pt x 108.56427pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 192--193
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 206--207
 [][] 
  []
 
-<Images/rot903.png, id=94, 217.81375pt x 218.8175pt>
+<Images/rot903.png, id=93, 217.81375pt x 218.8175pt>
 File: Images/rot903.png Graphic file (type png)
 <use Images/rot903.png>
-Package pdftex.def Info: Images/rot903.png  used on input line 197.
+Package pdftex.def Info: Images/rot903.png  used on input line 211.
 (pdftex.def)             Requested size: 108.56516pt x 109.06456pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 197--198
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 211--212
 [][] 
  []
 
 File: Images/og.png Graphic file (type png)
 <use Images/og.png>
-Package pdftex.def Info: Images/og.png  used on input line 208.
+Package pdftex.def Info: Images/og.png  used on input line 222.
 (pdftex.def)             Requested size: 108.56516pt x 107.57104pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 208--209
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 222--223
 [][] 
  []
 
-<Images/voltArrAbj.png, id=95, 218.8175pt x 217.81375pt>
+<Images/voltArrAbj.png, id=94, 218.8175pt x 217.81375pt>
 File: Images/voltArrAbj.png Graphic file (type png)
 <use Images/voltArrAbj.png>
-Package pdftex.def Info: Images/voltArrAbj.png  used on input line 213.
+Package pdftex.def Info: Images/voltArrAbj.png  used on input line 227.
 (pdftex.def)             Requested size: 108.56516pt x 108.06906pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 213--214
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 227--228
 [][] 
  []
 
-<Images/voltIzqDrch.png, id=96, 218.8175pt x 218.8175pt>
+<Images/voltIzqDrch.png, id=95, 218.8175pt x 218.8175pt>
 File: Images/voltIzqDrch.png Graphic file (type png)
 <use Images/voltIzqDrch.png>
-Package pdftex.def Info: Images/voltIzqDrch.png  used on input line 218.
+Package pdftex.def Info: Images/voltIzqDrch.png  used on input line 232.
 (pdftex.def)             Requested size: 108.56516pt x 108.56708pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 218--219
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 232--233
 [][] 
  []
 
-<Images/voltIDAA.png, id=97, 217.81375pt x 218.8175pt>
+<Images/voltIDAA.png, id=96, 217.81375pt x 218.8175pt>
 File: Images/voltIDAA.png Graphic file (type png)
 <use Images/voltIDAA.png>
-Package pdftex.def Info: Images/voltIDAA.png  used on input line 223.
+Package pdftex.def Info: Images/voltIDAA.png  used on input line 237.
 (pdftex.def)             Requested size: 108.56516pt x 109.06456pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 223--224
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 237--238
 [][] 
  []
 
 File: Images/og.png Graphic file (type png)
 <use Images/og.png>
-Package pdftex.def Info: Images/og.png  used on input line 233.
+Package pdftex.def Info: Images/og.png  used on input line 247.
 (pdftex.def)             Requested size: 84.96216pt x 84.18172pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 233--234
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 247--248
 [][] 
  []
 
-<Images/trasAbj.png, id=98, 218.8175pt x 217.81375pt>
+<Images/trasAbj.png, id=97, 218.8175pt x 217.81375pt>
 File: Images/trasAbj.png Graphic file (type png)
 <use Images/trasAbj.png>
-Package pdftex.def Info: Images/trasAbj.png  used on input line 238.
+Package pdftex.def Info: Images/trasAbj.png  used on input line 252.
 (pdftex.def)             Requested size: 84.96216pt x 84.57144pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 238--239
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 252--253
 [][] 
  []
 
-<Images/trasArr.png, id=99, 217.81375pt x 216.81pt>
+<Images/trasArr.png, id=98, 217.81375pt x 216.81pt>
 File: Images/trasArr.png Graphic file (type png)
 <use Images/trasArr.png>
-Package pdftex.def Info: Images/trasArr.png  used on input line 243.
+Package pdftex.def Info: Images/trasArr.png  used on input line 257.
 (pdftex.def)             Requested size: 84.96216pt x 84.56879pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 243--244
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 257--258
 [][] 
  []
 
-<Images/trasIzq.png, id=100, 218.8175pt x 218.8175pt>
+<Images/trasIzq.png, id=99, 218.8175pt x 218.8175pt>
 File: Images/trasIzq.png Graphic file (type png)
 <use Images/trasIzq.png>
-Package pdftex.def Info: Images/trasIzq.png  used on input line 248.
+Package pdftex.def Info: Images/trasIzq.png  used on input line 262.
 (pdftex.def)             Requested size: 84.96216pt x 84.96118pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 248--249
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 262--263
 [][] 
  []
 
-<Images/trasDrch.png, id=101, 217.81375pt x 218.8175pt>
+<Images/trasDrch.png, id=100, 217.81375pt x 218.8175pt>
 File: Images/trasDrch.png Graphic file (type png)
 <use Images/trasDrch.png>
-Package pdftex.def Info: Images/trasDrch.png  used on input line 253.
+Package pdftex.def Info: Images/trasDrch.png  used on input line 267.
 (pdftex.def)             Requested size: 84.96216pt x 85.35182pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 253--254
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 267--268
 [][] 
  []
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 File: Images/og.png Graphic file (type png)
 <use Images/og.png>
-Package pdftex.def Info: Images/og.png  used on input line 264.
+Package pdftex.def Info: Images/og.png  used on input line 278.
 (pdftex.def)             Requested size: 118.0078pt x 116.92677pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 264--265
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 278--279
 [][] 
  []
 
-<Images/noise.png, id=102, 217.81375pt x 216.81pt>
-File: Images/noise.png Graphic file (type png)
-<use Images/noise.png>
-Package pdftex.def Info: Images/noise.png  used on input line 269.
-(pdftex.def)             Requested size: 118.0078pt x 117.4627pt.
+<Images/zoom.png, id=101, 217.81375pt x 217.81375pt>
+File: Images/zoom.png Graphic file (type png)
+<use Images/zoom.png>
+Package pdftex.def Info: Images/zoom.png  used on input line 283.
+(pdftex.def)             Requested size: 118.0078pt x 118.00652pt.
 
-Overfull \hbox (0.79999pt too wide) in paragraph at lines 269--270
+Overfull \hbox (0.79999pt too wide) in paragraph at lines 283--284
 [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[6 <./Images/og.png> <./Images/rot901.png> <./Images/rot902.png> <./Images/rot9
+[5 <./Images/og.png> <./Images/rot901.png> <./Images/rot902.png> <./Images/rot9
 03.png> <./Images/voltArrAbj.png> <./Images/voltIzqDrch.png> <./Images/voltIDAA
-.png>]
-<Images/kernel.png, id=116, 937.36337pt x 411.43813pt>
+.png> <./Images/trasAbj.png> <./Images/trasArr.png> <./Images/trasIzq.png> <./I
+mages/trasDrch.png>]
+<Images/kernel.png, id=119, 937.36337pt x 411.43813pt>
 File: Images/kernel.png Graphic file (type png)
 <use Images/kernel.png>
-Package pdftex.def Info: Images/kernel.png  used on input line 303.
+Package pdftex.def Info: Images/kernel.png  used on input line 321.
 (pdftex.def)             Requested size: 472.03123pt x 207.1876pt.
- [7 <./Images/trasAbj.png> <./Images/trasArr.png> <./Images/trasIzq.png> <./Ima
-ges/trasDrch.png> <./Images/noise.png>] [8 <./Images/kernel.png>]
-<Images/CNN.png, id=139, 598.09656pt x 845.80821pt>
+ [6 <./Images/zoom.png>] [7 <./Images/kernel.png>]
+<Images/CNN.png, id=138, 598.09656pt x 845.80821pt>
 File: Images/CNN.png Graphic file (type png)
 <use Images/CNN.png>
-Package pdftex.def Info: Images/CNN.png  used on input line 351.
+Package pdftex.def Info: Images/CNN.png  used on input line 360.
 (pdftex.def)             Requested size: 472.03123pt x 667.52296pt.
 
 Overfull \vbox (36.81674pt too high) has occurred while \output is active []
 
 
-[9 <./Images/CNN.png>] [10] 
+[8 <./Images/CNN.png>]
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 3
+83.
+ (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+<Images/ReLU.png, id=145, 342.28665pt x 254.08311pt>
+File: Images/ReLU.png Graphic file (type png)
+<use Images/ReLU.png>
+Package pdftex.def Info: Images/ReLU.png  used on input line 412.
+(pdftex.def)             Requested size: 199.16928pt x 147.84517pt.
+[9 <./Images/ReLU.png>]
+<Images/evaluacion.png, id=156, 382.42876pt x 269.005pt>
+File: Images/evaluacion.png Graphic file (type png)
+<use Images/evaluacion.png>
+Package pdftex.def Info: Images/evaluacion.png  used on input line 430.
+(pdftex.def)             Requested size: 312.9803pt x 220.16273pt.
+ [10 <./Images/evaluacion.png>]
+
 AED: lastpage setting LastPage
 [11]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 369.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 369.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 455.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 455.
  (./TrabajoFinalAA.aux
 LaTeX Info: Redefining \. on input line 21.
 LaTeX Info: Redefining \% on input line 21.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 369.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 369.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 455.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 455.
 Package rerunfilecheck Info: File `TrabajoFinalAA.out' has not changed.
 (rerunfilecheck)             Checksum: D08C4512F06E8CBE6F15EA4B49943FC1;308.
  ) 
 Here is how much of TeX's memory you used:
- 9897 strings out of 481239
- 153175 string characters out of 5920377
- 442874 words of memory out of 5000000
- 24910 multiletter control sequences out of 15000+600000
- 567825 words of font info for 51 fonts, out of 8000000 for 9000
+ 9932 strings out of 481239
+ 154057 string characters out of 5920377
+ 440874 words of memory out of 5000000
+ 24935 multiletter control sequences out of 15000+600000
+ 568138 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,12n,96p,805b,597s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/hel
-vetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8
-a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on TrabajoFinalAA.pdf (11 pages, 4633328 bytes).
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texliv
+e/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+sy10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1000.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw
+/helvetic/uhvro8a.pfb>
+Output written on TrabajoFinalAA.pdf (11 pages, 4698954 bytes).
 PDF statistics:
- 196 PDF objects out of 1000 (max. 8388607)
- 139 compressed objects within 2 object streams
- 33 named destinations out of 1000 (max. 500000)
- 144 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 215 PDF objects out of 1000 (max. 8388607)
+ 153 compressed objects within 2 object streams
+ 38 named destinations out of 1000 (max. 500000)
+ 154 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -70,11 +70,14 @@
 
   \vspace{2mm}
 
-  Esta prueba deberá ser capaz de reconocer si el paciente está infectado por algún virus de la familia \textit{Coronaviridae} y, dado que existen muy pocos virus de esta familia que afectan a humanos, se podría asumir con cierta probabilidad que el paciente estaría infectado con el \textit{COVID-19}.
+  Esta prueba debe ser capaz de reconocer si el paciente está infectado por algún virus de la familia \textit{Coronaviridae} y, dado que existen muy pocos virus de esta familia que afectan a humanos, se puede asumir con cierta probabilidad que el paciente está infectado con el \textit{COVID-19}.
 
   \vspace{3mm}
 
-  Se ha pensado resolver este problema a través de técnicas de aprendizaje automático porque se trata de un problema de clasificación. Dado que las imágenes usadas para el entrenamiento tendrán una clase asociada, se podrán usar técnicas de \textbf{aprendizaje supervisado}. De esta forma, se reduciría el tiempo necesario para clasificar cada una de las muestras, porque eliminaría la necesidad de los especialistas de tener que revisar cada una de las muestras para comprobar si el paciente está o no infectado.
+  Se ha planteado resolver este problema a través de técnicas de aprendizaje automático porque se trata de una tarea de clasificación. Dado que las imágenes usadas para el entrenamiento tienen una clase asociada, se pueden usar técnicas de \textbf{aprendizaje supervisado}.
+  \vspace{2mm}
+
+  Esto permitiría crear tests para detectar el \textit{COVID-19} con una probabilidad elevada de acierto, siendo una prueba rápida, que se podría realizar a mucha gente y en muy poco tiempo. Además, reduciría la carga de los especialistas porque se convertiría en un proceso automatizado.
 
   \vspace{2mm}
 
@@ -86,12 +89,12 @@
 
   \begin{figure}[H]
     \begin{center}
-      \includegraphics[angle=90,width=80mm, frame]{Images/coronaviridae/coronaviridae_0009.jpg}
+      \includegraphics[angle=90,width=70mm, frame]{Images/coronaviridae/coronaviridae_0009.jpg}
       \caption{Muestra del virus \textit{COVID-19}}
     \end{center}
   \end{figure}
 
-  El proceso que habría que llevar a cabo sería:
+  El proceso que hay que llevar a cabo es:
 
   \begin{enumerate}
     \item Recopilar un número de imágenes de muestras considerable entre las que se encuentren todo tipo de virus, entre ellos, el \textit{COVID-19}. Estas imágenes deberán estar previamente etiquetadas.
@@ -103,13 +106,12 @@
 
   \vspace{2mm}
 
-  Dado que el conjunto de datos son imágenes, se va a usar una \textbf{red de neuronas} para realizar la tarea de aprendizaje automático. Esta red tendrá que ser capaz de diferenciar muestras con \textit{COVID-19}, muestras con otros virus, y muestras vacías.
+  Dado que el conjunto de datos son imágenes, se usa una \textbf{red de neuronas convolucionales} para realizar la tarea de aprendizaje automático. Esta red tiene que ser capaz de diferenciar muestras con \textit{COVID-19}, muestras con otros virus, y muestras vacías.
 
-  \newpage
 
   \section{Datos y Obtención de Datos}
 
-  El conjunto de datos que se usan para entrenar y evaluar el modelo son imágenes de muestras víricas clasificadas. Estas imágenes son tomadas por el microoscopio TEM, son en blanco y negro y de un tamaño variado. Estarán clasificadas en tres categorías: \textbf{COVID-19}, \textbf{otros virus} y \textbf{vacía}.
+  El conjunto de datos que se usan para entrenar y evaluar el modelo son imágenes de muestras víricas clasificadas. Estas imágenes son tomadas por el microoscopio TEM, son en blanco y negro y de un tamaño variado. Están clasificadas en tres categorías: \textbf{COVID-19}, \textbf{otros virus} y \textbf{vacía}.
 
   \vspace{5mm}
 
@@ -142,45 +144,57 @@
 
   El problema principal de estas imágenes es su poca cantidad (alrededor de 50 imágenes de cada clase), por eso ha sido necesario contactar con el \textit{CSIC}. Ya que es de vital importancia conseguir un conjunto de imágenes lo suficientemente grande como para poder entrenar a la red de la mejor forma posible.
 
-  \newpage
+  \vspace{2mm}
+
+  Otro problema que tienen estas imágenes es la falta de consistencia unas con otras, ya que no comparten ni tamaño ni método de obtención. Muchas de ellas poseen además una gran cantidad de ruido.
+
+  \vspace{2mm}
+
+  Estas dificultades hacen más complicada la tarea de aprendizaje.
+
+
 
   \section{Preproceso de Datos}
 
-  Dada la naturaleza de los datos, es necesario realizar ciertas transformaciones. La primera es que, a pesar de que las imágenes son de por sí en blanco y negro, había ciertos \textit{pixels} que se detectaban como formato \textit{RGB} y por tanto se han transformado a \textbf{escala de grises}.
+  Dada la naturaleza de los datos, es necesario realizar ciertas transformaciones. La primera es que, a pesar de que las imágenes son de por sí en blanco y negro, hay ciertos \textit{pixels} que se detectan con formato \textit{RGB} y por tanto se transforman a \textbf{escala de grises}.
 
   \vspace{2mm}
 
-  A continuación, dado que las imágenes no tienen el mismo tamaño, se ha hecho un reescalado a todas las imágenes para que tengan un tamaño de \textbf{500x500px}.
-
-  \vspace{4mm}
-
-  Después, se dividió el conjunto de datos en \textbf{set de entrenamiento} y \textbf{set de evaluación}. Al hacer esta separación se ha decidido dividir en una proporción de 20\% evaluación (24 datos) y 80\% entrenamiento (102 datos).
-
-  \vspace{4mm}
-
-  Dado que el número de datos que se tienen es muy reducido, se va a optar por usar técnicas para aumentar el número de datos. Esto se hace para evitar el \textit{overfitting}, dado que con un número pequeño de datos, es más fácil que se produzca.
+  A continuación, dado que las imágenes no tienen el mismo tamaño, se hace un reescalado para que tengan todas un tamaño de \textbf{500x500px}.
 
   \vspace{2mm}
 
-  El aumento de datos se realizará en todas las imágenes del set de entrenamiento, para aumentar el máximo posible el número de datos. En un principio, no se va a realizar un aumento al set de evaluación.
+  Después, se divide el conjunto de datos en \textbf{set de entrenamiento} y \textbf{set de evaluación}. Al hacer esta separación se ha decidido dividir en una proporción de 20\% evaluación (24 datos) y 80\% entrenamiento (102 datos).
 
   \vspace{2mm}
 
-  Las técnicas de aumento de datos que se van a utilzar son: \textit{\textbf{rotación}}, \textit{\textbf{volteo}}, \textit{\textbf{traslación}} y \textit{\textbf{añadir ruido}}.
+  Como el número de datos que se tienen es muy reducido, se opta por usar técnicas para aumentarlos. Esto se hace con el propósito de evitar el \textit{overfitting}, dado que con un número pequeño de datos, es más fácil que se produzca.
+
+  \vspace{2mm}
+
+  Este aumento de imágenes se realiza tanto en el set de entrenamiento como en el set de evaluación. Aunque las transformaciones no son las mismas.
+
+  \vspace{2mm}
+
+  Las técnicas de aumento de datos que se utilizan sobre el set de entrenamiento son: \textit{\textbf{rotación}}, \textit{\textbf{volteo}}, \textit{\textbf{traslación}}, \textit{\textbf{zoom}}, \textit{\textbf{zoom con rotación}} y \textit{\textbf{zoom con volteo}}.
+
+  \vspace{1mm}
+
+  Las técnicas de aumento de datos que se utilizan sobre el set de evaluación son: \textit{\textbf{rotación}} y \textit{\textbf{volteo}}.
 
   \vspace{3mm}
 
-  Otras técnicas que serían también útiles pero que no se van a implementar a menos que sean necesarias son: ampliar o alejar la imagen, rotaciones no solo de 90º y mezclar varias técnicas.
+  Otras técnicas que serían también útiles pero que no se van a implementar a menos que sean necesarias son: alejar la imagen, rotaciones no solo de 90º, añadir ruido, invertir el color de la imágenes y mezclar distintas transformaciones.
 
   \vspace{2mm}
 
-  Estas técnicas se pueden aplicar a las imágenes debido a que no son especialmente simétricas, y por tanto, las nuevas imágenes generadas serán diferentes a las originales y permitirán a la red tener un mejor aprendizaje y reducir el \textit{overfitting}.
+  Estas técnicas se pueden aplicar a las imágenes debido a que no son especialmente simétricas, y por tanto, las nuevas imágenes generadas son diferentes a las originales y permiten a la red tener un mejor aprendizaje y reducir el \textit{overfitting}.
 
   \begin{figure}[!h]
     \centering
     \begin{subfigure}[b]{0.23\textwidth}
       \includegraphics[width=\textwidth, frame]{Images/og.png}
-      \caption{Imágen original}
+      \caption{Imagen original}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.23\textwidth}
@@ -206,7 +220,7 @@
     \centering
     \begin{subfigure}[b]{0.23\textwidth}
       \includegraphics[width=\textwidth, frame]{Images/og.png}
-      \caption{Imágen original}
+      \caption{Imagen original}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.23\textwidth}
@@ -231,7 +245,7 @@
     \centering
     \begin{subfigure}[b]{0.18\textwidth}
       \includegraphics[width=\textwidth, frame]{Images/og.png}
-      \caption{Imágen original}
+      \caption{Imagen original}
     \end{subfigure}
     \hfill
     \begin{subfigure}[b]{0.18\textwidth}
@@ -262,23 +276,27 @@
     \hspace{0.16\textwidth}
     \begin{subfigure}[H]{0.25\textwidth}
       \includegraphics[width=\textwidth, frame]{Images/og.png}
-      \caption{Imágen original}
+      \caption{Imagen original}
     \end{subfigure}
     \hspace{0.16\textwidth}
     \begin{subfigure}[H]{0.25\textwidth}
-      \includegraphics[width=\textwidth, frame]{Images/noise.png}
-      \caption{Imágen con ruido}
+      \includegraphics[width=\textwidth, frame]{Images/zoom.png}
+      \caption{Imagen con zoom}
     \end{subfigure}
 
-    \caption{Imágenes generadas con \textbf{ruido}}
+    \caption{Imágenes generadas con \textbf{zoom}}
   \end{figure}
 
 
-    \newpage
+  \newpage
+
+
+  Después de realizar estas transformaciones sobre las imágenes originales, se obtienen \textbf{2550} imágenes de entrenamiento y \textbf{168} de evaluación.
+
 
   \section{Modelado}
 
-  Como la tarea definida es una clasificación de imágenes, el algoritmo que se va a usar es una \textbf{red neuronal convolucional}. Esta es una red neuronal formada por la siguiente combinación de capas: convolucional, \textit{pooling} y densa. Estas redes son especialmente buenas en problemas relacionados con imágenes, porque son capaces de obtener características de las mismas, útil en esta clasificación.
+  Como la tarea definida es una clasificación de imágenes, el algoritmo que se usa es una \textbf{red neuronal convolucional}. Esta red está formada por la siguiente combinación de capas: convolucional, \textit{pooling} y densa. Estas redes son especialmente buenas en problemas relacionados con imágenes, porque son capaces de obtener características de las mismas, útiles en esta clasificación.
 
   \vspace{3mm}
 
@@ -308,7 +326,7 @@
 
     \vspace{2mm}
 
-    Con esto se consigue reducir el tamaño de la matriz de forma que se van consiguiendo las características más relevantes de cada sección en cada capa.
+    Con esto se consigue reducir el tamaño de la matriz de forma que se obtienen las características más relevantes de cada sección en cada capa.
 
 
     \item \textbf{\textit{Pooling}}: capa encargada de reducir el tamaño de la matriz de entrada drásticamente, realizando una operación para resumir las características de una región. En concreto \textit{max-pooling}, encuentra el valor máximo dentro de un grupo de píxeles.
@@ -329,32 +347,105 @@
   \begin{itemize}
     \item \textbf{\textit{Flatten}}: esta capa no aporta información a la red, y su única funcionalidad es la de hacer de puente entre las capas convolucionales y las capas densas, ya que tanto las entradas como las salidas de las capas convolucionales consisten en vectores tridimensionales, mientras que las capas densas trabajan con vectores unidimensionales. Por tanto, esta capa transforma este vector tridimensional '\textit{aplanándolo}', es decir, poniendo todos sus datos de forma consecutiva, para que la capa densa pueda utilizarlos.
 
-    \item \textbf{\textit{Dropout}}: es una forma de regularizar el entrenamiento de la red. Sirve para prevenir el \textit{overfitting} de forma rápida y fácil.
+    \item \textbf{\textit{Dropout}}: es una forma de regularizar el entrenamiento de la red. Sirve para prevenir el \textit{overfitting} de forma rápida y sencilla.
 
     \item \textbf{\textit{Batch Normalization}}: normaliza los valor de la función de activación en una capa oculta. Así se evitan pesos fuera de rango, permite una tasa de aprendizaje más alta y reduce el \textit{overfitting}.
 
   \end{itemize}
-  % Justificar el tipo de algoritmo adecuado para la/s tarea/s definida/s.
-  %
-  % Breve descripcion de la tecnica o tecnicas de aprendizaje automatico que se utilizarıan para resolverel problema.
-  %
-  % Describir como se plantearıa la seleccion de parametros
-  % ¿Que parametros podrıan ser mas relevantes?
-  % ¿Que factores se consideran para la seleccion de parametros?
-  %
-  % Describir si es necesaria alguna preparacion adicional de los datos especıfica para la/s tecnica/selegida/s.
 
   \newpage
 
   \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{Images/CNN.png}
-    \caption{Arquitectura de la red neuronal}
+    \caption{Arquitectura de la red neuronal usada para la clasificación}
   \end{figure}
 
   \newpage
 
+  La arquitectura anterior es la usada en la clasificación. Se ha decidido usar esta arquitectura tras realizar pruebas con variantes de la misma.
+
+  \vspace{2mm}
+
+  Está formada por \textbf{31} capas. La entrada es una matriz tridimensional de dimensiones \textbf{500x500x1}. La salida son \textbf{3} valores distintos donde cada uno representa la confianza del modelo de que una imagen concreta sea de esa cada clase.
+
+  \vspace{2mm}
+
+  La arquitectura se divide en dos grandes bloques, con una capa conectora entre ellos:
+
+  \begin{enumerate}
+    \item \textbf{Bloque Convolucional}
+
+    Este bloque se encarga de ir extrayendo las características de las distintas secciones de la imagen, reduciendo así su tamaño hasta alcanzar una matriz con dimensiones \textit{6x6x32}. Esto lo hace utilizando la siguiente combinación de capas: \textbf{Capa Convolucional}, \textbf{Capa de \textit{MaxPooling}}, \textbf{Capa de \textit{Batch Normalization}} y \textbf{Capa de \textit{Dropout}}. Esta estructura de capas se repite 6 veces, para obtener el resultado deseado.
+
+    \vspace{2mm}
+
+    En el esquema de la página anterior, las capas convolucionales están acompañadas de dos valores: el primer valor, que toma formas como \texttt{122x122x64}, indica el tamaño de la matriz tridimensional que produce esa capa. El segundo valor, que es o \texttt{3x3} o  \texttt{2x2}, indica el tamaño del \textit{kernel} de esa capa.
+
+    \vspace{1mm}
+
+    Al igual que las capas convolucionales, las capas de \textit{pooling} cuentan con dos valores, donde el primero indica el tamaño de la matriz tridimensional que devuelven como salida, y el segundo hace referencia a la reducción que realiza, indicando el \texttt{2x2} que convierte 2 pixels en 1 solo.
+
+    \vspace{1mm}
+
+    Las capas de \textit{dropout} tan solo tienen un valor, que indica la fracción de unidades que se eliminan aleatoriamente de la red.
+
+    \item \textit{Capa Flatten}
+
+    Esta capa no aporta valor al modelo, solo se encarga de transformar la información de salida del bloque convolucional para que pueda utilizarlo como entrada el bloque denso. La transformación que hace esta capa es convertir el vector tridimensional \texttt{6x6x32} en el vector unidimensional \texttt{1152}.
+
+    \item \textbf{Bloque Denso}
+
+    Este bloque se encarga de realizar la clasificación utilizando los valores que recibe de la capa \textit{Flatten}. Para ello realiza los cálculos que determinan el valor de cada una de las neuronas de la última capa, que son las que definen la salida. Se usan 4 capas densas y 3 capas de \textit{Dropout} entre ellas.
+
+    \vspace{2mm}
+
+    En el esquema de la página anterior, las capas densas están acompañadas de un valor que indica el número de neuronas de esa capa.
+
+  \end{enumerate}
+
+
+  Todas las neuronas de las capas convolucionales y de las capas densas usan la función activación \textbf{ReLU}, cuya fórmula es $ f(x) = \max(0, x) $ y tiene la siguiente forma:
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=70mm]{Images/ReLU.png}
+    \caption{Función de activación ReLU}
+  \end{figure}
+
+  La función de optimización que se usa en el modelo es \textbf{adam}, que experimentalmente ofrece mejores resultados que \textit{descenso del gradiente}, pues está basado en un ratio de aprendizaje adaptativo, a diferencia del ratio fijo que usa \textit{descenso del gradiente}.
+
+  \vspace{2mm}
+
+  La función de coste va a ser \textbf{SparseCategoricalCrossentropy}, que calcula la entropia como la probabilidad entre dos distribuciones. Se utiliza generalmente en problemas con más de dos clases, como es el caso.
+
+
+
   \section{Evaluación}
+
+  En primer lugar, se ha entrenado a la red durante \textbf{20} \textit{epochs} (vuelta completa a los datos).
+
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=110mm]{Images/evaluacion.png}
+    \caption{Gráfico de evaluación del modelo}
+  \end{figure}
+
+
+  Al finalizar el entrenamiento, la precisión alcanzada sobre el set de evaluación es \textbf{79.76\%} y la precisión alcanzada sobre el set de entrenamiento es \textbf{96.35\%}.
+
+  \vspace{2mm}
+
+  Como se ve en el gráfico anterior, la progresión sobre los datos de entrenamiento es exclusivamente creciente, mientras que no es estable en los datos de evaluación. Esto se debe a un claro \textit{overfitting}. A pesar de esto, este es el modelo con mayor precisión que se ha conseguido, siendo bastante aceptable ya que clasifica correctamente el 80\% de las imágenes.
+
+  \vspace{2mm}
+
+  Las razones principales por las que se cree que se ha producido este \textit{overfitting} son la necesidad de un mayor número de datos y la mala calidad de los datos que se tienen.
+
+  \vspace{3mm}
+
+  Algunos ejemplos de evaluación que se han obtenido son:
+
 
   \newpage
   \section{Uso}
