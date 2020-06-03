@@ -70,7 +70,7 @@
 
   \vspace{2mm}
 
-  Esta idea nace de una propuesta realizada para el \textit{Hackathon} de la Comunidad de Madrid '\textit{Vence al virus}', el pasado 1 y 2 de Abril. La idea es identificar los pacientes infectados a través de las muestras víricas observadas con un microoscopio TEM (\textit{Transmission Electron Microscopes}), para así conseguir una prueba rápida, efectiva y de bajo coste.
+  Esta idea nace de una propuesta realizada para el \textit{Hackathon} de la Comunidad de Madrid '\textit{Vence al virus}', el pasado 1 y 2 de Abril. La idea es identificar los pacientes infectados a través de las muestras víricas observadas con un microoscopio TEM (\textit{Transmission Electron Microscopy}), para así conseguir una prueba rápida, efectiva y de bajo coste.
 
   \vspace{2mm}
 
@@ -353,7 +353,7 @@
 
     \item \textbf{\textit{Dropout}}: es una forma de regularizar el entrenamiento de la red. Sirve para prevenir el \textit{overfitting} de forma rápida y sencilla.
 
-    \item \textbf{\textit{Batch Normalization}}: normaliza los valor de la función de activación en una capa oculta. Así se evitan pesos fuera de rango, permite una tasa de aprendizaje más alta y reduce el \textit{overfitting}.
+    \item \textbf{\textit{Batch Normalization}}: normaliza los valores de la función de activación en una capa oculta. Así se evitan pesos fuera de rango, permite una tasa de aprendizaje más alta y reduce el \textit{overfitting}.
 
   \end{itemize}
 
@@ -371,7 +371,7 @@
 
   \vspace{2mm}
 
-  Está formada por \textbf{31} capas. La entrada es una matriz tridimensional de dimensiones \textbf{500x500x1}. La salida son \textbf{3} valores distintos donde cada uno representa la confianza del modelo de que una imagen concreta sea de esa cada clase.
+  Está formada por \textbf{31} capas. La entrada es una matriz tridimensional de dimensiones \textbf{500x500x1}. La salida son \textbf{3} valores distintos donde cada uno representa la confianza del modelo de que una imagen concreta sea de esa clase.
 
   \vspace{2mm}
 
@@ -409,7 +409,7 @@
   \end{enumerate}
 
 
-  Todas las neuronas de las capas convolucionales y de las capas densas usan la función activación \textbf{ReLU}, cuya fórmula es $ f(x) = \max(0, x) $ y tiene la siguiente forma:
+  Todas las neuronas de las capas convolucionales y de las capas densas usan la función de activación \textbf{ReLU}, cuya fórmula es $ f(x) = \max(0, x) $ y tiene la siguiente forma:
 
   \begin{figure}[H]
     \centering
@@ -421,7 +421,7 @@
 
   \vspace{2mm}
 
-  La función de coste va a ser \textbf{SparseCategoricalCrossentropy}, que calcula la entropia como la probabilidad entre dos distribuciones. Se utiliza generalmente en problemas con más de dos clases, como es el caso.
+  La función de coste es \textbf{SparseCategoricalCrossentropy}, que calcula la entropia como la probabilidad entre dos distribuciones. Se utiliza generalmente en problemas con más de dos clases, como es el caso.
 
 
 
